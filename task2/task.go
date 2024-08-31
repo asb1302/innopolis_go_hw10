@@ -110,6 +110,10 @@ func (n *Node) Insert(k int) *Node {
 		n.first = n.first.Insert(k)
 	} else if n.size == 1 || (n.size == 2 && k <= n.key[1]) {
 		n.second = n.second.Insert(k)
+	} else if k <= n.key[0] {
+		n.first = n.first.Insert(k)
+	} else if n.size == 1 || (n.size == 2 && k <= n.key[1]) {
+		n.second = n.second.Insert(k)
 	} else {
 		n.third = n.third.Insert(k)
 	}
@@ -129,6 +133,8 @@ func (n *Node) Split(item *Node) *Node {
 	x.second = item.second
 	y.first = item.third
 	y.second = item.fourth
+	x.parent = item.parent
+	y.parent = item.parent
 
 	if x.first != nil {
 		x.first.parent = x
